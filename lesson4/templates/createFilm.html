@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block body %}
+<script>
+    function checkCorrect(form){
+    let film_name = document.getElementById("fn");
+    let film_rating = document.getElementById("fr");
+    let film_country = document.getElementById("fc");
+
+    let text = "";
+
+    if(film_name.value.length < 1){
+        text = text + "Напишите название фильма!\n";
+        film_name.style.borderColor = "red";
+    }else{
+        film_name.style.borderColor = "black";
+    }
+
+    if(film_rating.value.length < 1){
+        text = text + "Укажите рейтинг фильма!\n";
+        film_rating.style.borderColor = "red";
+    }else{
+        film_rating.style.borderColor = "black";
+    }
+
+    if(film_country.value.length < 1){
+        text = text + "Укажите страну фильма!\n";
+        film_country.style.borderColor = "red";
+    }else{
+        film_country.style.borderColor = "black";
+    }
+
+    if(isNaN(Number(film_rating.value))){
+        text = text + "Рейтинг должен быть числом!\n";
+        film_rating.style.borderColor = "red";
+    }else{
+        film_rating.style.borderColor = "black";
+    }
+
+    if(text.length < 1){
+        form.submit();
+    }else{
+        alert(text);
+    }
+}
+</script>
+<h2>{{ title }}</h2>
+<div>
+<form action="/">
+    Введите название фильма:
+    <input name="film_name" id="fn"> <br>
+    Введите рейтинг фильма:<br>
+    <input name="film_rating" id="fr"> <br>
+    Введите страну фильма:<br>
+    <input name="film_country" id="fc"> <br>
+    <br>
+    <input type="button" onClick="checkCorrect(this.form)" value="Создать фильм" >
+</form>
+</div>
+{% endblock %}s

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <script>
+        function sortedOn(form){
+
+            form.submit();
+        }
+    </script>
+
+
+    <h1>{{ title }}</h1>
+    <div style="text-align: center;">
+    <form action="/createFilm">
+        <button>Добавить фильм</button>
+    </form>
+    </div>
+    <div>
+        <form action="/" method="get">
+            Выборка по стране:
+            <input name="country" id="cr"><br>
+            Выборка по рейтингу:
+            <input name="rating" id="rt">
+            <input type="submit">
+        </form>
+    </div>
+    {#  условие должно обязательно закрываться конструкцией {% endif %} #}
+    {#  цикл так же должен закрываться конструкцией {% endfor %} #}
+
+    {% if country and rating %}
+        {% for film in films %}
+            {% if country == film.country and rating <= film.rating %}
+                <div onclick="location.href = '{{ url_for("get_film", film_id=film.id) }}'">
+                    <p>{{ film.name }}</p>
+                    <p>{{ film.rating }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% elif country %}
+        {% for film in films %}
+            {% if country == film.country %}
+                <div onclick="location.href = '{{ url_for("get_film", film_id=film.id) }}'">
+                    <p>{{ film.name }}</p>
+                    <p>{{ film.rating }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% elif rating %}
+        {% for film in films %}
+            {% if rating <= film.rating %}
+                <div onclick="location.href = '{{ url_for("get_film", film_id=film.id) }}'">
+                    <p>{{ film.name }}</p>
+                    <p>{{ film.rating }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% for film in films %}
+            <div onclick="location.href = '{{ url_for("get_film", film_id=film.id) }}'">
+                <p>{{ film.name }}</p>
+                <p>{{ film.rating }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
